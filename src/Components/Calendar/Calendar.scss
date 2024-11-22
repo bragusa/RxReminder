@@ -1,0 +1,107 @@
+.Calendar-month {
+
+  user-select: none;
+
+  .Calendar-month-title {
+    font-size: 3rem;
+  }
+
+  .Calendar-headers th {
+    font-weight: normal;
+  }
+
+  .Calendar-today {
+
+    &>button {
+      outline: 1px solid #ffffff !important;
+      outline-offset: -2px;
+    }
+    
+    &>button:hover {
+        transition: scale .2s ease-in;
+        transform: scale(1.05);
+        outline: 2px solid yellow;
+        outline-offset: -3px;
+    }
+
+    &>.Calendar-day {
+
+      &>div {
+        background: #bfbfbf;
+      }
+    }
+
+  }
+
+  .Calendar-day {
+    position: relative;
+    cursor: default;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+
+    :hover {
+      transition: scale .2s ease-in;
+      transform: scale(1.05);
+    }
+
+    &>div {
+      width: 6rem;
+      height: 6rem;
+      background-color: #8090ad;
+      border: 2px solid #282c34;
+    }
+
+    .Calendar-day-number:not(:empty) {
+      position: absolute;
+      left: 0;
+      font-family: verdana;
+      padding: 0.25rem;
+      min-width: 2rem;
+      padding-left: 0;
+    }
+
+    .Calendar-day-marked {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: hue-rotate(248deg);
+      font-size: 3.5rem;
+      opacity: .75;
+    }
+  }
+}
+
+@media screen and (max-width: 700px), 
+    screen and (max-height: 700px) {
+        
+  .Calendar-month {
+
+    .Calendar-headers th {
+      font-weight: normal;
+    }
+
+    .Calendar-month-title {
+      font-size: 2rem;
+    }
+
+    .Calendar-day {
+      &>div {
+        max-width: 2.5rem;
+        max-height: 2.5rem;
+      }
+
+      .Calendar-day-number:not(:empty) {
+        min-width: 0.75rem;
+      }
+
+      .Calendar-day-marked {
+        font-size: 2rem;
+      }
+    }
+  }
+}

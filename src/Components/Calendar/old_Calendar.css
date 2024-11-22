@@ -1,0 +1,501 @@
+ .teamCalendar--full-month, .teamCalendar--full-month > table {
+    border-collapse: collapse;
+ }
+
+.teamCalendar--calendar-month {
+  /* width: 100%;
+  display: flex; */
+  flex-direction: column;
+  border-collapse: collapse;
+  border-collapse: collapse;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) {
+  margin: 0 1rem;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) td .teamCalendar--calendar-day-front[data-holiday-icon]:after {
+  content: attr(data-holiday-icon);
+  font-size: 150%;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  pointer-events: none;
+  /* box-shadow: inset 6px 6px 14px rgba(255,255,255,0.75), inset 4px 4px 23px rgba(2, 68, 67, .75); */
+  border-radius: 50%;
+  /* padding: 0.25rem; */
+  pointer-events: none;
+}
+
+.teamCalendar--calendar-month > tbody {
+  height: 100%;
+}
+
+.teamCalendar--calendar-headers > tbody > tr,
+.teamCalendar--calendar-month > tbody > tr {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.teamCalendar--calendar-headers th {
+  display: flex;
+  justify-content: center;
+  width: 14.28%;
+  align-items: center;
+}
+
+.teamCalendar--calendar-headers th > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[theme='dark'] .teamCalendar--calendar-headers th > div {
+  color: #000;
+}
+
+.teamCalendar--calendar-week {
+  display: flex;
+  justify-content: space-evenly;
+  height: calc((100% - 2.5rem) / 5);
+}
+
+.teamCalendar--calendar-day {
+  border: 1px solid #999999;
+  width: 14.28%;
+  border-inline-end-width: 0;
+  border-block-end-width: 0;
+  outline-offset: -4px;
+  position: relative;
+  user-select: none;
+  overflow: hidden;
+  background-color: var(--background-color);
+  z-index: 1;
+}
+
+.teamCalendar--calendar-day-front-comment {
+  width: 4rem;
+  height: 4rem;
+  position: absolute;
+  top: -2.5rem;
+  right: -2.5rem;
+  transform: rotate(-45deg);
+  transition: all .2s;
+}
+
+.teamCalendar--calendar-day-front-comment:hover {
+  background-color: darkred;
+  opacity: 0.5;
+  transform: rotate(-45deg) scale(1.25);
+}
+
+.teamCalendar--calendar-day[data-commented='true'] .teamCalendar--calendar-day-front-comment {
+  background: darkred;
+}
+
+.teamCalendar--small .teamCalendar--calendar-day-front-comment {
+  top: -3.5rem;
+  right: -2.75rem;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day {
+  width: 8rem;
+  height: 8rem;
+  perspective: 1000px;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day-inner {
+  position: relative;
+  width: calc(100% + 1px);
+  height: 100%;
+  text-align: center;
+  transition: transform 0.3s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  left: 0;
+  top: 0;
+  position: absolute;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day[data-flip='true']:hover .teamCalendar--calendar-day-inner,
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day[data-flip='true']:focus-within .teamCalendar--calendar-day-inner {
+  transform: rotateY(180deg);
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day[data-flip='true']:hover .teamCalendar--calendar-day-inner .teamCalendar--calendar-day-back > div,
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day[data-flip='true']:focus-within .teamCalendar--calendar-day-inner .teamCalendar--calendar-day-back > div {
+  display: initial !important;
+}
+
+.teamCalendar--calendar-day-front, .teamCalendar--calendar-day-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  padding-top: 1px;
+}
+
+.teamCalendar--calendar-day[data-editable='true'] .teamCalendar--calendar-day-front,
+.teamCalendar--calendar-day[data-editable='true'] .teamCalendar--calendar-day-front button {
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.teamCalendar--calendar-day[data-editable='false'] .teamCalendar--calendar-day-front,
+.teamCalendar--calendar-day[data-editable='false'] .teamCalendar--calendar-day-front button {
+  font-size: 0.75rem;
+}
+
+.teamCalendar--calendar-day-back {
+  background-color: #F4F4F4;
+  transform: rotateY(180deg);
+}
+
+body[theme='dark'] .teamCalendar--calendar-day-back {
+  background-color: #434343;
+}
+
+.teamCalendar--calendar-day-selector {
+  height: calc(100% - 10px);
+  width: calc(100% - 10px);
+  margin: 5px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--day-selected .teamCalendar--calendar-day-selector{
+  border-color: red;
+}
+
+.teamCalendar--calendar-day .teamCalendar--action-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0;
+  pointer-events: all;
+  outline: 0;
+}
+
+.teamCalendar--calendar-day .teamCalendar--action-button:hover {
+  background-color: transparent;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day .teamCalendar--action-button {
+  transform: scale(0.75);
+}
+
+.teamCalendar--calendar-month .teamCalendar--small 
+
+.teamCalendar--calendar-day .teamCalendar--action-button:focus {
+  display: initial;
+}
+
+.teamCalendar--calendar-day:hover .teamCalendar--action-button {
+  display: initial;
+  pointer-events: all;
+}
+
+.teamCalendar--small td.teamCalendar--calendar-day {
+  transition: all .1s;
+}
+
+ .teamCalendar--small td.teamCalendar--calendar-day:not(.teamCalendar--calendar-weekend-day):hover {
+  font-weight: bold;
+ }
+
+
+ td.teamCalendar--calendar-weekend-day > div {
+  display: none !important;
+}
+/* .teamCalendar--small td.teamCalendar--calendar-day:not(.teamCalendar--calendar-weekend-day):hover {
+  z-index: 100;
+  transform: scale(1.25);
+  outline: 1px solid #999;
+  outline-offset: -1px;
+  border-radius: 50%;
+} */
+
+.teamCalendar--small td.teamCalendar--calendar-day:not(.teamCalendar--calendar-weekend-day) .teamCalendar--focus:focus-within {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+  width: 100%;
+  height: 100%;
+}
+
+/* .teamCalendar--small td.teamCalendar--calendar-day:not(.teamCalendar--calendar-weekend-day):focus-within {
+  z-index: 100;
+  transform: scale(1.25);
+  outline: 1px solid #999;
+  outline-offset: 0;    
+  border-radius: 50%;
+  outline-color: var(--focus);
+} */
+
+.teamCalendar--small td.teamCalendar--calendar-day[data-editable='true']:not(.teamCalendar--calendar-weekend-day):hover button,
+.teamCalendar--small td.teamCalendar--calendar-day[data-editable='true']:not(.teamCalendar--calendar-weekend-day):focus-within button {
+    z-index: 100;
+    font-size: 110%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.teamCalendar--small td.teamCalendar--calendar-day:not(.teamCalendar--calendar-weekend-day) button:focus {
+  outline-color: transparent;
+}
+
+.teamCalendar--calendar-day.teamCalendar--calendar-weekend-day .teamCalendar--action-button {
+  pointer-events: none;
+}
+
+.teamCalendar--calendar-day.teamCalendar--calendar-weekend-day {
+  background-color: var(--ui-03);
+}
+
+.teamCalendar--calendar-day.teamCalendar--calendar-weekend-day * {
+  cursor: default;
+}
+
+body[theme='dark'] .teamCalendar--calendar-day.teamCalendar--calendar-weekend-day {
+  background-color: #333333;
+}
+
+.teamCalendar-full-year-month h4 {
+  margin-bottom: 0 !important;
+}
+
+.teamCalendar--small td.teamCalendar--calendar-day {
+  min-width: 2rem;
+  min-height: 2rem;
+  position: relative;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.teamCalendar--small td.teamCalendar--calendar-day div {
+  padding: 0;
+}
+
+td.teamCalendar--calendar-day[data-today] .teamCalendar--calendar-day-number {
+  background-color: var(--interactive-link);
+  color: var(--ui-01);
+}
+
+.teamCalendar--small td.teamCalendar--calendar-day[data-today]{
+  /* box-shadow: inset 2px 2px 3px #0012ff, inset -3px -2px 2px #0012ff; */
+  outline: 2px solid #0012ff;
+  outline-offset: -2px;
+  box-sizing: unset;
+}
+
+.teamCalendar--small td.teamCalendar--calendar-day[data-today] button {
+  font-size: 95%;
+}
+
+
+tr.teamCalendar--calendar-week:last-of-type .teamCalendar--calendar-day {
+  border-block-end-width: 1px;
+}
+
+td.teamCalendar--calendar-day:last-of-type {
+  border-inline-end-width: 1px;
+}
+
+.teamCalendar--calendar-day-number {
+  display: flex;
+  border-radius: 50%;
+  min-width: 26px;
+  margin: -0.25rem;
+  font-size: 90%;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) td:not([data-holiday-description])[data-editable='false'] {
+  opacity: 0.5;
+  font-size: 0.75rem;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day-number {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  padding: 1px;
+  color: #000;
+  border-radius: 0 0% 50% 0;
+  font-weight: 400;
+  background: rgba(255,255,255,0.5);
+  z-index: 1;
+  position: absolute;
+  top: 0;
+}
+
+body[theme='dark'] .teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day-number {
+  background-color: rgba(67, 67, 67, .5);
+  color: #fff;
+}
+
+.teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-day-number:empty {
+  display: none;
+}
+
+body[theme='dark'] .teamCalendar--calendar-month:not(.teamCalendar--small) .teamCalendar--calendar-weekend-day .teamCalendar--calendar-day-number {
+  background-color: transparent;
+  color: #eeeeee;
+}
+
+.teamCalendar--small .teamCalendar--calendar-day-number {
+  font-size: 70%;
+  margin-inline-start: -6px;
+}
+
+.teamCalendar--calendar-day-content {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  text-align: center;
+  outline: none !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 250%;
+}
+
+ body[theme='dark'] .teamCalendar--calendar-day-content > div:not(:empty) {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  font-size: 130%;
+}
+
+.teamCalendar--small .teamCalendar--calendar-day-content {
+  font-size: 70%;
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body .teamCalendar--calendar-day[data-selected] {
+  outline: 2px solid #ffffff !important;
+}
+
+/* body[theme='dark'] .teamCalendar--calendar-day[data-selected] {
+  background-color: var(--ui-04) !important;
+} */
+
+body[theme='dark'] .teamCalendar--calendar-day-content {
+  color: var(--font-color);
+}
+
+.teamCalendar--day-am.teamCalendar--day-vacation {
+  background: linear-gradient(to bottom,  rgba(36, 161, 72,1) 1%,rgba(36, 161, 72,.5) 50%,rgba(36, 161, 72,0) 52%);
+}
+
+.teamCalendar--day-pm.teamCalendar--day-vacation {
+  background: linear-gradient(to top,  rgba(36, 161, 72,1) 1%,rgba(36, 161, 72,.5) 50%,rgba(36, 161, 72,0) 52%);
+}
+
+.teamCalendar--day-am.teamCalendar--day-sick {
+  background: linear-gradient(to bottom,  rgba(165, 110, 255,1) 1%,rgba(165, 110, 255,.5) 50%,rgba(165, 110, 255,0) 52%);
+}
+
+.teamCalendar--day-pm.teamCalendar--day-sick {
+  background: linear-gradient(to top,  rgba(165, 110, 255,1) 1%,rgba(165, 110, 255,.5) 50%,rgba(165, 110, 255,0) 52%);
+}
+
+.teamCalendar--day-am.teamCalendar--day-personal {
+  background: linear-gradient(to bottom,  rgba(165, 110, 255,1) 1%,rgba(165, 110, 255,.5) 50%,rgba(165, 110, 255,0) 52%);
+}
+
+.teamCalendar--day-pm.teamCalendar--day-personal {
+  background: linear-gradient(to top,  rgba(165, 110, 255,1) 1%,rgba(165, 110, 255,.5) 50%,rgba(165, 110, 255,0) 52%);
+}
+
+
+.teamCalendar--day-masked:not(.teamCalendar--day-am):not(.teamCalendar--day-pm) {
+  background-color: var(--day-masked);
+}
+
+.teamCalendar--day-am.teamCalendar--day-masked {
+  background: linear-gradient(to bottom,  rgba(175, 196, 208,1) 1%,rgba(175, 196, 208,.5) 50%,rgba(175, 196, 208,0) 52%);
+}
+
+.teamCalendar--day-pm.teamCalendar--day-masked {
+  background: linear-gradient(to top,  rgba(175, 196, 208,1) 1%,rgba(175, 196, 208,.5) 50%,rgba(175, 196, 208,0) 52%);
+}
+
+
+body[theme='dark'] .teamCalendar--day-am.teamCalendar--day-vacation {
+  background: linear-gradient(to bottom,  rgba(36, 161, 72,1) 1%,rgba(36, 161, 72,1) 50%,rgba(36, 161, 72,0) 52%);
+}
+
+body[theme='dark'] .teamCalendar--day-pm.teamCalendar--day-vacation {
+  background: linear-gradient(to top,  rgba(36, 161, 72,1) 1%,rgba(36, 161, 72,1) 50%,rgba(36, 161, 72,0) 52%);
+}
+
+body[theme='dark'] .teamCalendar--day-am.teamCalendar--day-sick {
+  background: linear-gradient(to bottom,  rgba(250, 77, 86,1) 1%,rgba(250, 77, 86,1) 50%,rgba(250, 77, 86,0) 52%);
+}
+
+body[theme='dark'] .teamCalendar--day-pm.teamCalendar--day-sick {
+  background: linear-gradient(to top,  rgba(250, 77, 86,1) 1%,rgba(250, 77, 86,1) 50%,rgba(250, 77, 86,0) 52%);
+}
+
+body[theme='dark'] .teamCalendar--day-am.teamCalendar--day-personal {
+  background: linear-gradient(to bottom,  rgba(165, 110, 255,1) 1%,rgba(165, 110, 255,1) 50%,rgba(165, 110, 255,0) 52%);
+}
+
+body[theme='dark'] .teamCalendar--day-pm.teamCalendar--day-personal {
+  background: linear-gradient(to top,  rgba(165, 110, 255,1) 1%,rgba(165, 110, 255,1) 50%,rgba(165, 110, 255,0) 52%);
+}
+
+
+body[theme='dark'] .teamCalendar--calendar-month.teamCalendar--small .teamCalendar--day-vacation button div {
+  background-color: rgba(0,0,0,1);
+}
+
+.teamCalendar--day-vacation:not(.teamCalendar--day-am):not(.teamCalendar--day-pm),
+.teamCalendar--day-vacation .teamCalendar--half-day {
+  background-color: var(--day-vacation);
+}
+
+.teamCalendar--day-sick:not(.teamCalendar--day-am):not(.teamCalendar--day-pm),
+.teamCalendar--day-sick .teamCalendar--half-day {
+  background-color: var(--day-sick);
+}
+
+.teamCalendar--day-holiday {
+  background-color: var(--day-holiday);
+} 
+
+.teamCalendar--day-other {
+  background-color: var(--day-other);
+}
+
+.teamCalendar--day-personal:not(.teamCalendar--day-am):not(.teamCalendar--day-pm),
+.teamCalendar--day-personal .teamCalendar--half-day {
+  background-color: var(--day-personal);
+}
+
+textarea {
+  resize: none;
+  border: 0px;
+  box-sizing: border-box;
+  position: relative;
+  width: 18rem;
+  height: 4rem;
+  z-index: 0;
+  padding: 0.5rem;
+}

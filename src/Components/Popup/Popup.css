@@ -1,0 +1,40 @@
+.teamCalendar--popup {
+  background-color: var(--background-color);
+  position: absolute;
+  z-index: 5000;
+  border: 1px solid var(--ui-05);
+  padding: 0;
+}
+
+.teamCalendar-full-year-month .teamCalendar--popup {
+  padding-bottom: 1rem;
+}
+
+body[theme='dark'] .teamCalendar--popup {
+  border: 1px solid var(--ui-01);
+}
+
+.teamCalendar--popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem 0;
+}
+
+.teamCalendar--small + .teamCalendar--popup .teamCalendar--popup-header {
+  margin-bottom: 0.25rem;
+}
+
+.teamCalendar--popup-header h4 {
+  margin: 1rem 0 1rem;
+}
+
+.teamCalendar--popup-header .teamCalendar--popup-close {
+  margin-inline-end: -0.5rem;
+  transform: scale(0.75);
+  padding: 0.125rem;
+}
+
+.teamCalendar--popup-content {
+  margin: 0 1rem;
+}

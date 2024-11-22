@@ -1,0 +1,86 @@
+  body {
+    --ui-background: #f4f4f4; /* Default page background */
+    --interactive-link: #0f62fe; /* Primary interactive color, primary buttons */
+    --interactive-02: #393939; /* Secondary interactive color, secondary buttons */
+    --interactive-03: #0f62fe; /* 4.5:1 AA contrast, Tertiary buttons */
+    --interactive-04: #0f62fe; /* 3:1 AA contrast, selected elements, active elements, accent icons */
+    --ui-01: #ffffff; /* Primary container background, Secondary page background */ 
+    --ui-02: #f4f4f4; /* Primary page background, Secondary container background */ 
+    --ui-03: #e0e0e0; /* Subtle border, Tertiary background color */ 
+    --ui-04: #8d8d8d; /* 3:1 AA element contrast, Medium contrast border */ 
+    --ui-05: #161616; /* 4.5:1 AA element contrast, High contrast border, emphasis elements */
+    --link-01: #0f62fe; /* Primary links, Ghost button */ 
+    --icon-01: #161616; /* Primary icons */
+    --icon-02: #525252; /* Secondary icons */
+    --icon-03: #ffffff; /* Tertiary icons, Icons on interactive colors, Icons on non-ui colors */
+    --field-01: #ffffff; /* Default input fields, Field color on $ui-backgrounds */
+    --field-02: #f4f4f4; /* Input field color on $ui-02 backgrounds */
+    --support-01: #da1e28; /* Error */
+    --support-02: #198038; /* Success */
+    --support-03: #f1c21b; /* Warning */
+    --support-03: #0043ce; /* Information */
+    --focus: #0f62fe; /* Focus border */
+    --hover-primary: #6295f3; /* interactive-01 hover */
+    --hover-primary-25: #6295f340; /* interactive-01 hover */
+    --hover-secondary: #4c4c4c; /* interactive-02 hover */
+    --hover-secondary-25: #4c4c4c40; /* interactive-02 hover */
+    --hover-tertiary: #0353e9; /* interactive-03 hover */
+    --hover-ui: #e5e5e5; /* Row hover */
+    --hover-row: #e5e5e5; /* Row hover */
+
+    --disabled-01: #ffffff; /* Disabled fields, Disabled backgrounds, Disabled border */
+    --disabled-02: #c6c6c6; /* Disabled label, Disabled elements on $disabled-01, Disabled text on $disabled-01, Disabled icons, Disabled border */
+    --disabled-03: #8d8d8d; /* Disabled text on $disabled-02, Disabled icons on $disabled-02 */
+  }
+
+  body[theme='dark'] {
+    --ui-background: #161616; /* Default page background */
+    --interactive-link: #0f62fe; /* Primary interactive color, primary buttons */
+    --interactive-02: #393939; /* Secondary interactive color, secondary buttons */
+    --interactive-03: #0f62fe; /* 4.5:1 AA contrast, Tertiary buttons */
+    --interactive-04: #0f62fe; /* 3:1 AA contrast, selected elements, active elements, accent icons */
+    --ui-01: #ffffff; /* Primary container background, Secondary page background */ 
+    --ui-02: #f4f4f4; /* Primary page background, Secondary container background */ 
+    --ui-03: #e0e0e0; /* Subtle border, Tertiary background color */ 
+    --ui-04: #8d8d8d; /* 3:1 AA element contrast, Medium contrast border */ 
+    --ui-05: #161616; /* 4.5:1 AA element contrast, High contrast border, emphasis elements */
+    --link-01: #0f62fe; /* Primary links, Ghost button */ 
+    --icon-01: #161616; /* Primary icons */
+    --icon-02: #525252; /* Secondary icons */
+    --icon-03: #ffffff; /* Tertiary icons, Icons on interactive colors, Icons on non-ui colors */
+    --field-01: #ffffff; /* Default input fields, Field color on $ui-backgrounds */
+    --field-02: #f4f4f4; /* Input field color on $ui-02 backgrounds */
+    --support-01: #da1e28; /* Error */
+    --support-02: #198038; /* Success */
+    --support-03: #f1c21b; /* Warning */
+    --support-03: #0043ce; /* Information */
+    --focus: #0f62fe; /* Focus border */
+    --hover-primary: #6295f3; /* interactive-01 hover */
+    --hover-primary-25: #6295f340; /* interactive-01 hover */
+    --hover-secondary: #4c4c4c; /* interactive-02 hover */
+    --hover-secondary-25: #4c4c4c40; /* interactive-02 hover */
+    --hover-tertiary: #0353e9; /* interactive-03 hover */
+    --hover-ui: #e5e5e5; /* Row hover */
+    --hover-row: #e5e5e5; /* Row hover */
+
+    --disabled-01: #ffffff; /* Disabled fields, Disabled backgrounds, Disabled border */
+    --disabled-02: #c6c6c6; /* Disabled label, Disabled elements on $disabled-01, Disabled text on $disabled-01, Disabled icons, Disabled border */
+    --disabled-03: #8d8d8d; /* Disabled text on $disabled-02, Disabled icons on $disabled-02 */
+    
+  }
+
+  /* hex transparency reference 
+100% — FF
+90% — E6
+80% — CC
+75% — BF
+70% — B3
+60% — 99
+50% — 80
+40% — 66
+30% — 4D
+25% — 40
+20% — 33
+10% — 1A
+0% — 00
+*/

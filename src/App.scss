@@ -1,0 +1,213 @@
+.App {
+  text-align: center;
+  user-select: none;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+
+  .App-header {
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    z-index: 1;
+    background-color: inherit;
+    margin-bottom: 2rem;
+
+    .App-Today {
+      font-size: 80%; 
+      padding-inline-start: 7px;
+      padding-block-end: 5px;
+      transition: all .2s;
+
+      &:after {
+        content: 'Today';
+        font-size: 50%;
+        color: #fff;
+        position: absolute;
+        margin-top: -2rem;
+        opacity: 0;
+      }
+
+      &:hover {
+
+        &:after {
+          opacity: 1;
+        }
+      }
+    }
+
+    .App-edit {
+      font-size: 70%; 
+      padding-inline-start: 7px;
+      padding-block-end: 5px;
+      transition: all .2s;
+
+      &:after {
+        content: 'Edit list';
+        font-size: 50%;
+        color: #fff;
+        position: absolute;
+        margin-top: -2rem;
+        opacity: 0;
+      }
+
+      &:hover {
+
+        &:after {
+          opacity: 1;
+        }
+      }
+    }
+
+    sub {
+      font-size: 50%;
+    }
+
+    &>div>div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &>div>div>div {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .App-medication {
+        min-width: 150px;
+        position: relative;
+        height: 2rem;
+        background-color: #282c34;
+        color: #fff;
+        border: 1px solid #fff;
+        border-radius: 5px;
+
+        select {
+          appearance: none;
+          width: 100%;
+          font-size: 1.15rem;
+          padding: 0.675em 6em 0.675em 1em;
+          background-color: #fff;
+          border: 1px solid #caced1;
+          color: #000;
+          cursor: pointer;
+        }
+    }
+
+    .App-medication::before,
+    .App-medication::after {
+      --size: 0.3rem;
+      content: "";
+      position: absolute;
+      right: 1rem;
+      pointer-events: none;
+    }
+    
+    .App-medication::before {
+      border-left: var(--size) solid transparent;
+      border-right: var(--size) solid transparent;
+      border-bottom: var(--size) solid black;
+      top: 40%;
+    }
+    
+    .App-medication::after {
+      border-left: var(--size) solid transparent;
+      border-right: var(--size) solid transparent;
+      border-top: var(--size) solid black;
+      top: 55%;
+    }
+
+
+    .App-DateTitle {
+      font-size: 2rem;
+      display: block;
+      width: 15rem;
+      margin-top: -5px;
+    }
+
+    &>div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &>div:last-of-type {
+      margin-top: 1rem;
+    }
+
+    button {
+      background: transparent;
+      border: 0;
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+      max-height: 2rem;
+      max-width: 2rem;
+      min-width: 2rem;
+      min-height: 2rem;
+      margin-inline: 1rem;
+      border-radius: 50% 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      &>svg {
+        width: 3rem;
+        height: 3rem;
+        min-width: 3rem;
+        
+        &>path {
+          fill: #fff;
+        }
+      }
+
+    }
+
+    button:hover {
+      background-color: dimgrey;
+    }
+  }
+
+  .App-body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 700px), 
+  screen and (max-height: 700px) {
+    .App {
+      .App-header {
+ 
+        .App-DateTitle {
+          font-size: 100%;
+        }
+
+        .App-Today {
+          font-size: 80%; 
+          padding-inline-start: 6px;
+          padding-block-end: 1px;
+        }
+
+        button {
+          font-size: 1rem;
+          border: 1px solid #fff;
+          margin-inline: 1rem;
+
+          &>svg {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+      }
+    }
+
+}
