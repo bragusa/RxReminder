@@ -11,8 +11,8 @@ const dateResources = DateUtility.getResources();
 function App() {
     const dbAdapter = new DBAdapter();
     const query = new URLSearchParams(window.location.search);
-    const [userName] = useState(query.get('user') || 'ttragusa');
-    const [password] = useState(query.get('password') || 'loveofmylife');
+    const [userName] = useState(query.get('user') || 'guest');
+    const [password] = useState(query.get('password') || 'guestpassword');
     const [working, setWorking] = useState(true);
     const [medicationData, setMedicationData] = useState();
     const [userData, setUserData] = useState();
