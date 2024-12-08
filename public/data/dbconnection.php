@@ -2,9 +2,9 @@
   header('Content-Type: application/json; charset=utf-8');
   
   $dbhost = 'localhost';
-  $dbuser = 'southsho_admin';
-  $dbpass = 'SouthShoreWeb_Admin';
-  $dbname = 'southsho_medications';  
+  $dbuser = 'XXX';
+  $dbpass = 'XXX';
+  $dbname = 'XXX';  
 
   try {
     $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);

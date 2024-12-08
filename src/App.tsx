@@ -26,7 +26,6 @@ export interface Medication {
 
 const dateResources = DateUtility.getResources();
 
-
 function App() {
   const { isAuthorized, setIsAuthorized } = useAuth();
   const dbAdapter = DBAdapter();

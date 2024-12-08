@@ -1,6 +1,4 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Simple web app that helps to track taking medications/vitamins each day
 
 ## Available Scripts
 
