@@ -1,5 +1,23 @@
 # Simple web app that helps to track taking medications/vitamins each day
 
+RxReminder is designed to help you keep track of daily medications so you know when you have taken them. (Currently, there is no way to add medications in the UI and they must be added directly to the database.)
+
+To mark the current day, simply tap/click today. To help avoid accidental edits, use a double tap/click or CTRL+click to mark a different day or unmark today. You may also navigate using the keyboard and mark/unmark a day with SPACEBAR or ENTER.
+
+Use the navigation at the top of the page to move to other months or jump back to today.
+
+https://southshoreweb.com/rxreminder
+
+rxguest / rxguest
+
+Tip: The best way to use the app is on your mobile device. The application can be installed as a Progressive Web App (PWA), but does require an Internet connection.
+
+- On android:
+First, navigate to the site in Chrome. Press the "three dot" icon in the upper right to open the menu. Select "Add to Home screen." Press the "Add" button in the popup. The PWA is now installed and available on your home screen.
+- On iOS:
+Navigate to the site in Safari. Press the "Share" button and select "Add to Home Screen" from the popup. Lastly, tap "Add" in the top right corner to finish installing the PWA.
+
+
 ## Available Scripts
 
 In the project directory, you can run:
