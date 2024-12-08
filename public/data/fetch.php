@@ -1,4 +1,4 @@
-<?php require 'dbconnection.php';?><?php
+<?php require 'dbconnection.php';?><?php require 'authentication.php';?><?php
 
 $table_name = $_GET['tablename'];
 $order_by = $_GET['orderby'];

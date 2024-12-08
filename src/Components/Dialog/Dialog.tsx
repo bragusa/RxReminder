@@ -8,15 +8,19 @@ export interface DialogProps {
   close?: ()=>void;
   user: User;
   index: number;
+  cancel: string | null;
+  apply: string | null;
 }
 
 export interface SimpleDialogProps {
   title: string;
   content: React.ReactElement;
+  cancel: string | null;
+  apply: string | null;
 }
 
 export interface DialogContentProps {
-  user: User;
+  user?: User;
   close: ()=>void;
 }
 
@@ -25,7 +29,7 @@ export interface DialogContentRef {
   cancel: () => void;
 }
 
-const Dialog: React.FC<DialogProps> = ({ title, content, close, index }) => {
+const Dialog: React.FC<DialogProps> = ({ title, content, close, index, cancel, apply }) => {
 //const Dialog = forwardRef<HTMLDivElement, DialogProps>(({ title, content, close, index }, ref) => {
   const contentRef = useRef<any>(null); // Create a ref for the content
   useEffect(()=>{
@@ -53,19 +57,22 @@ const Dialog: React.FC<DialogProps> = ({ title, content, close, index }) => {
 
   return (<div className="Dialog-underlay">
       <div className='Dialog-main'>
-        <header><span>{title}</span><button onClick={close} className='Dialog-close'>X</button></header>
+        <header><span>{title}</span><button onClick={close} className='Dialog-close'>x</button></header>
         <div className='Dialog-content'>{newContent}</div>
           <div className='Dialog-button-group'>
-            <button onClick={() => {
+            {cancel?<button onClick={() => {
               if (contentRef.current) {
                 contentRef.current.cancel(); // Call method on content
               }
-            }}>Cancel</button>
+            }}>{cancel}</button>:null}
             <button onClick={() => {
               if (contentRef.current) {
                 contentRef.current.apply(); // Call method on content
+                if(close){
+                  close();
+                }
               }
-            }}>Save</button>
+            }}>{apply}</button>
           </div>
       </div>
     </div>

@@ -1,0 +1,34 @@
+<IfModule mod_headers.c>
+  # Allow CORS from specific domains
+  SetEnvIf Origin "http://localhost:3000" allow_origin
+  SetEnvIf Origin "https://localhost:3000" allow_origin
+  SetEnvIf Origin "https://example.com" allow_origin
+
+  # Allow the request if the Origin is allowed
+  Header set Access-Control-Allow-Origin "%{HTTP_ORIGIN}e" env=allow_origin
+
+  # Allow credentials (cookies, HTTP authentication)
+  Header set Access-Control-Allow-Credentials "true" env=allow_origin
+
+  # Allow specific methods (GET, POST, etc.)
+  Header set Access-Control-Allow-Methods "POST, GET, OPTIONS" env=allow_origin
+
+  # Allow specific headers
+  Header set Access-Control-Allow-Headers "Content-Type, Authorization" env=allow_origin
+
+  # Respond to preflight OPTIONS requests
+  <Limit OPTIONS>
+    Header set Access-Control-Allow-Origin "%{HTTP_ORIGIN}e" env=allow_origin
+    Header set Access-Control-Allow-Methods "POST, GET, OPTIONS" env=allow_origin
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization" env=allow_origin
+    Header set Access-Control-Allow-Credentials "true" env=allow_origin
+    SetEnvIf Origin "http://localhost:3000" AccessControlAllowOrigin
+    SetEnvIf Origin "https://localhost:3000" AccessControlAllowOrigin
+    SetEnvIf Origin "https://example.com" AccessControlAllowOrigin
+  </Limit>
+</IfModule>
+
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# This domain inherits the “PHP” package.
+# php -- END cPanel-generated handler, do not edit

@@ -3,12 +3,13 @@ import { forwardRef, useImperativeHandle, useEffect, useState } from 'react';
 import './EditMedications.scss';
 import DBAdapter from '../../DatabaseAdapter';
 import DataList from '../../Components/DataList/DataList.js';
-import DatabaseTransactions from '../../DatabaseTransactions';
 const EditMedications = forwardRef(({ user, close }, ref) => {
     const updateMedication = async (medication) => {
-        const dbTransactions = new DatabaseTransactions();
-        const result = await dbTransactions.updateMedication(user.username, user.password, medication.name, medication.sort);
-        console.log(result);
+        if (!user) {
+            return;
+        }
+        // const result = await dbTransactions.updateMedication(user.username, user.password, medication.name, medication.sort);
+        // console.log(result);
     };
     useImperativeHandle(ref, () => ({
         apply() {
@@ -22,11 +23,14 @@ const EditMedications = forwardRef(({ user, close }, ref) => {
             close();
         }
     }));
-    const dbAdapter = new DBAdapter();
+    const dbAdapter = DBAdapter();
     const [medications, setMedications] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const medicationData = await dbAdapter.fetchData(user.username, user.password, 'medications', 'sort');
+            if (!user) {
+                return;
+            }
+            const medicationData = await dbAdapter.fetchData('medications', 'sort');
             setMedications(medicationData);
         };
         fetchData();

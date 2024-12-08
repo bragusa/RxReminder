@@ -104,7 +104,7 @@ const DataList: React.FC<DataListProps> = ({ data, columns, insertRow, deleteRow
                           listData[rowIndex][attribute] = input.value;
                         }
                         //listData[rowIndex][attribute] = value;
-                        // debugger;
+                        // ;
                         // if(newData[rowIndex][attribute]){
                         //   newData[rowIndex][attribute] = input.value;
                         // }

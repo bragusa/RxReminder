@@ -11,12 +11,7 @@
   }
 
   .Calendar-today {
-
-    &>button {
-      outline: 1px solid #ffffff !important;
-      outline-offset: -2px;
-    }
-    
+   
     &>button:hover {
         transition: scale .2s ease-in;
         transform: scale(1.05);

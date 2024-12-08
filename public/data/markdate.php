@@ -1,11 +1,11 @@
-<?php require 'dbconnection.php';?><?php
+<?php require 'dbconnection.php';?><?php require 'authentication.php';?><?php
 
 $medication = $_GET['medication'];
 $date = $_GET['date'];
 $marked = $_GET['marked'];
 
 //make sure we have all the data that we require
-if(!isset($username) || !isset($password) || !isset($medication) || !isset($date) || !isset($marked)){
+if(!isset($username) || !isset($medication) || !isset($date) || !isset($marked)){
   print json_encode([ 'status' => 'failed']);
   die('Could not get data. Must supply username, password, medication, date, and marked.');
 }

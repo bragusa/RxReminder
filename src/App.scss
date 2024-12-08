@@ -1,3 +1,7 @@
+body {
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
   user-select: none;
@@ -17,6 +21,31 @@
     z-index: 1;
     background-color: inherit;
     margin-bottom: 2rem;
+
+    .Today-icon {
+      font-size: 10px;
+      color: #fff;
+      border-radius: 5px;
+      transform: scale(.85);
+      min-width: 1.75rem;
+
+      & > div:first-of-type {
+        background: #a30000;
+        padding-inline: 0.25rem;
+        padding-block: 1px;
+      }
+    
+      & > div:last-of-type {
+        background-color: #bdbdbd;
+        color: #000;
+        height: 1.15rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 130%;
+      }
+
+    }
 
     .App-Today {
       font-size: 80%; 
@@ -142,7 +171,47 @@
       margin-top: 1rem;
     }
 
-    button {
+    button.SignOut {
+      position: fixed;
+      top: 0.5rem;
+      right: 0.5rem;
+      border: none;
+      background-color: transparent;
+      margin: 0;
+      border-radius: 50%;
+      height: 2.5rem;
+      width: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 32px;
+        filter: invert(1);
+      }
+
+      &:after {
+        content: "Sign Out";
+        font-size: 60%;
+        color: #fff;
+        position: absolute;
+        margin-top: 3rem;
+        opacity: 0;
+      }
+
+      &:hover {
+
+        &:after {
+          opacity: 1;
+        }
+      }
+
+    }
+    
+
+
+
+    button:not(.SignOut) {
       background: transparent;
       border: 0;
       font-size: 2rem;
@@ -179,6 +248,7 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    min-height: 20rem;
   }
 }
 

@@ -30,6 +30,10 @@
       display: flex;
       padding-inline-end: 0.25rem;
 
+      .Dialog-close {
+        font-size: 1.25rem;
+      }
+
       span {
         padding: 0.5rem;
       }
