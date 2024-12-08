@@ -30,7 +30,7 @@ const Login: React.FC<LoginProps> = ({ setAuth }) => {
       const auth = await dbAdapter.checkForCookie();
       if(auth.status==='success'){
         setIsAuthorized(true); // Save auth data to context
-        navigate('/app');
+        navigate('/');
         return;
       }
       setWorking(false);
@@ -61,7 +61,7 @@ const Login: React.FC<LoginProps> = ({ setAuth }) => {
     }
 
     setIsAuthorized(true); // Save auth data to context
-    navigate('/app');
+    navigate('/');
   };
 
   return (

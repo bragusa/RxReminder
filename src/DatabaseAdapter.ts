@@ -16,7 +16,7 @@ const DBAdapter = () => {
     }  
     
     // Navigate to a fallback route
-    navigate('/');
+    navigate('/login');
   };
 
 

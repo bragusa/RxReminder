@@ -4,7 +4,7 @@ import { useAuth } from "./AuthContext";
 const ProtectedRoute = ({ children }) => {
     const authContext = useAuth();
     if (!authContext.isAuthorized) {
-        return _jsx(Navigate, { to: "/" });
+        return _jsx(Navigate, { to: "/login" });
     }
     return _jsx(_Fragment, { children: children });
 };

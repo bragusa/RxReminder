@@ -12,7 +12,7 @@ const DBAdapter = () => {
             console.error(`Unknown error in ${context}:`, error);
         }
         // Navigate to a fallback route
-        navigate('/');
+        navigate('/login');
     };
     const sendPayload = async ({ transaction, body, params = [], errorString }) => {
         try {
