@@ -62,7 +62,7 @@ const Calendar = ({ displayMonth, displayYear, user, medication, setWorking, sho
         return _jsx("td", { className: today ? 'Calendar-today' : '', "data-marked": marked, onDoubleClick: () => { if (displayNum > 0) {
                 ;
                 toggleDay(displayDateString, marked);
-            } }, children: displayNum ? _jsx("button", { className: 'Calendar-day', onKeyUp: (evt) => {
+            } }, children: _jsx("button", { className: 'Calendar-day', disabled: !displayNum, onKeyUp: (evt) => {
                     if (['Enter', ' '].includes(evt.key) && displayNum > 0) {
                         toggleDay(displayDateString, marked);
                     }
@@ -70,7 +70,7 @@ const Calendar = ({ displayMonth, displayYear, user, medication, setWorking, sho
                     if (displayNum > 0) {
                         toggleDay(displayDateString, marked);
                     }
-                } }, children: _jsxs("div", { children: [_jsx("div", { className: 'Calendar-day-number', children: displayNum > 0 ? displayNum : '' }), marked ? _jsx("div", { className: 'Calendar-day-marked', style: { 'transform': `rotate(${displayNum / 2}deg)` }, children: "\u274C" }) : null] }) }) : null }, `key${dayNum}`);
+                } }, children: _jsxs("div", { className: displayNum === 0 ? 'Empty' : '', children: [displayNum > 0 ? _jsx("div", { className: 'Calendar-day-number', children: displayNum > 0 ? displayNum : '' }) : null, marked ? _jsx("div", { className: 'Calendar-day-marked', style: { 'transform': `rotate(${displayNum / 2}deg)` }, children: "\u274C" }) : null] }) }) }, `key${dayNum}`);
     };
     const writeWeek = (firstDayOfTheMonth, week, monthMarkedDates) => {
         return _jsx("tr", { className: 'Calendar-week', children: dateResources.days.long.map((day, dayOfWeek) => {

@@ -36,10 +36,6 @@
     padding: 0;
     margin: 0;
 
-    :hover {
-      transition: scale .2s ease-in;
-      transform: scale(1.05);
-    }
 
     &>div {
       width: 6rem;
@@ -48,13 +44,24 @@
       border: 2px solid #282c34;
     }
 
+
+    &>div:not(.Empty):hover {
+      transition: scale .2s ease-in;
+      transform: scale(1.05);
+    }
+
+
+    &>div.Empty {
+      opacity: .25;
+    }
+
     .Calendar-day-number:not(:empty) {
       position: absolute;
       left: 0;
       font-family: verdana;
       padding: 0.25rem;
       min-width: 2rem;
-      padding-left: 0;
+      padding-left: 3px;
     }
 
     .Calendar-day-marked {

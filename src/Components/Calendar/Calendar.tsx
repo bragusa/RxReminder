@@ -97,14 +97,14 @@ const Calendar: React.FC<Props> = ({ displayMonth, displayYear, user, medication
     const todaysDate = new Date();
     const today = displayNum === todaysDate.getDate() && displayMonth === todaysDate.getMonth() && displayYear === todaysDate.getFullYear();
     return <td className={today?'Calendar-today':''} data-marked={marked} key={`key${dayNum}`}  onDoubleClick={()=>{if(displayNum>0){;toggleDay(displayDateString, marked)}}} >
-      {displayNum?<button className='Calendar-day'onKeyUp={(evt)=>{
+      <button className='Calendar-day' disabled={!displayNum} onKeyUp={(evt)=>{
         if(['Enter', ' '].includes(evt.key) && displayNum>0){toggleDay(displayDateString, marked);}
       }} onClick={(evt)=>{if((today && !marked) || (today && evt.ctrlKey)){if(displayNum>0){toggleDay(displayDateString, marked)}}}}>
-        <div>
-          <div className='Calendar-day-number'>{displayNum > 0 ? displayNum : ''}</div>
+        <div className={displayNum === 0?'Empty':''}>
+        {displayNum > 0? <div className='Calendar-day-number'>{displayNum > 0 ? displayNum : ''}</div>: null }
           {marked ? <div className='Calendar-day-marked' style={{ 'transform': `rotate(${displayNum/2}deg)` }}>❌</div> : null}
         </div>
-      </button>: null}
+      </button>
     </td>
   }
 
