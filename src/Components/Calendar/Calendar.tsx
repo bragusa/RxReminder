@@ -17,6 +17,7 @@ interface Props  {
   displayMonth: number;
   displayYear: number;
   setWorking(working: boolean): void;
+  timesPerDay: number;
 }
 
 interface Dates {
@@ -27,7 +28,7 @@ interface Dates {
 }
 
 
-const Calendar: React.FC<Props> = ({ displayMonth, displayYear, user, medication, setWorking, showDate = true }) => {
+const Calendar: React.FC<Props> = ({ displayMonth, displayYear, user, medication, setWorking, showDate = true, timesPerDay }) => {
 
   const dbTransactions = DBAdapter();
 
@@ -62,9 +63,19 @@ const Calendar: React.FC<Props> = ({ displayMonth, displayYear, user, medication
     </tr>
   }
 
-  const toggleDay = async(date: string, marked: boolean) => {
+  const toggleDay = async(date: string, timesPerDay: number, marked: number) => {
     setWorking(true);
-    const success = await dbTransactions.markDate(medication, date, marked ? 0 : 1);
+    if(timesPerDay>1){
+      marked = marked + 1;
+      if(marked>timesPerDay){
+        marked = 0;
+      }
+    }
+    else {
+      marked = marked===0?1:0;
+    }
+
+    const success = await dbTransactions.markDate(medication, date, marked);
   
     const newDatesData: Array<Dates> = await dbTransactions.fetchData('dates', 'date asc');
     // Only update if new data differs
@@ -77,32 +88,56 @@ const Calendar: React.FC<Props> = ({ displayMonth, displayYear, user, medication
   const writeDay = (firstDayOfTheMonth: Date, day: string, dayNum: number, dayOfWeek: number, markedDates: Array<Dates>) => {
     let offset = firstDayOfTheMonth.getDay(); //returns day of the week to start
     let displayNum = 0;
-    if (dayNum >= offset) {
+    //if (dayNum >= offset) {
       displayNum = dayNum + 1 - offset;
-      if (displayNum < 1 || displayNum > new Date(firstDayOfTheMonth.getFullYear(), firstDayOfTheMonth.getMonth() + 1, 0).getDate()) {
-        displayNum = 0;
+      if (displayNum < 1 ){
+        displayNum = 0
       }
-    }
+      const daysInMonth =  new Date(firstDayOfTheMonth.getFullYear(), firstDayOfTheMonth.getMonth() + 1, 0).getDate();
+      // if(displayNum > daysInMonth) {
+      //   debugger;
+      //   displayNum = displayNum - daysInMonth;
+      // }
+    //}
     const myDate = displayNum.toString().length > 0 ? new Date(firstDayOfTheMonth).setDate(displayNum) : null;
     const thisDaysDate = new Date();
     const todaysString = `${thisDaysDate.getFullYear()}-${(thisDaysDate.getMonth()+1).toString().padStart(2, '0')}-${thisDaysDate.getDate().toString().padStart(2, '0')}`;
-    const displayDateString = `${firstDayOfTheMonth.getFullYear()}-${(firstDayOfTheMonth.getMonth()+1).toString().padStart(2, '0')}-${displayNum.toString().padStart(2, '0')}`;
+    let month = firstDayOfTheMonth.getMonth()+1;
+    let displayDateString = `${firstDayOfTheMonth.getFullYear()}-${(month).toString().padStart(2, '0')}-${displayNum.toString().padStart(2, '0')}`;
+
+    if(displayNum > daysInMonth) {
+      displayNum = displayNum - daysInMonth;
+      month = month + 1;
+      let year = displayYear;
+      if(month===12){
+        month = 1;
+        year++;
+      }
+      displayDateString = `${year}-${(month).toString().padStart(2, '0')}-${displayNum.toString().padStart(2, '0')}`;
+    }
 
     const currentDateData = markedDates?.filter(date=> {
       const equal = date.date===displayDateString && date.medication === medication;
       return equal
     });
     // next line must be == to compare string and number
-    const marked = currentDateData && currentDateData.length>0 ? currentDateData[0].marked == 1 : false;
+    const marked = currentDateData && currentDateData.length>0 ? parseInt(String(currentDateData[0].marked)) : 0;
     const todaysDate = new Date();
     const today = displayNum === todaysDate.getDate() && displayMonth === todaysDate.getMonth() && displayYear === todaysDate.getFullYear();
-    return <td className={today?'Calendar-today':''} data-marked={marked} key={`key${dayNum}`}  onDoubleClick={()=>{if(displayNum>0){;toggleDay(displayDateString, marked)}}} >
+    return <td className={today?'Calendar-today':''} data-marked={marked} key={`key${dayNum}`}  onDoubleClick={()=>{if(displayNum>0){;toggleDay(displayDateString, timesPerDay, marked)}}} >
       <button className='Calendar-day' disabled={!displayNum} onKeyUp={(evt)=>{
-        if(['Enter', ' '].includes(evt.key) && displayNum>0){toggleDay(displayDateString, marked);}
-      }} onClick={(evt)=>{if((today && !marked) || (today && evt.ctrlKey)){if(displayNum>0){toggleDay(displayDateString, marked)}}}}>
-        <div className={displayNum === 0?'Empty':''}>
-        {displayNum > 0? <div className='Calendar-day-number'>{displayNum > 0 ? displayNum : ''}</div>: null }
-          {marked ? <div className='Calendar-day-marked' style={{ 'transform': `rotate(${displayNum/2}deg)` }}>❌</div> : null}
+        if(['Enter', ' '].includes(evt.key) && displayNum>0){toggleDay(displayDateString, timesPerDay, marked);}
+      }} onClick={(evt)=>{if(evt.ctrlKey || (today && !marked) || (today && timesPerDay>1)){if(displayNum>0){toggleDay(displayDateString,timesPerDay, marked)}}}}>
+        <div className={displayNum === 0?'Different-month':''}>
+          <div className='Calendar-day-number'>{displayNum > 0 ? displayNum : ''}</div>
+          { marked < timesPerDay && timesPerDay > 1 && marked >= 1 && (
+            <div className='TimesTaken'>
+              {Array.from({ length: timesPerDay }).map((_, index) => {
+                return <div className={marked>index?'Taken':'NotTaken'} key={index}>{marked>index?'':index + 1}</div>;
+              })}
+            </div>
+          )}
+          {marked > 0 && timesPerDay === marked ? <div className='Calendar-day-marked' style={{ 'transform': `rotate(${displayNum/2}deg)` }}>❌</div> : null}
         </div>
       </button>
     </td>

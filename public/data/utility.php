@@ -1,4 +1,8 @@
 <?php 
+session_start();
+
+$expires = time() + 600; //only 10 minutes
+// error_log(basename($_SERVER['PHP_SELF']) . '    Username=' . $_SESSION['username'] . '    sessionid=' . session_id(), 0);
 // List of allowed domains
 // $allowedOrigins = ['http://localhost:3000', 'http://southshoreweb.com'];
 

@@ -1,16 +1,8 @@
 <?php require 'utility.php';?><?php require 'authentication.php';?><?php
 
-// Allow credentials (cookies, authorization headers)
-//header('Access-Control-Allow-Credentials: true');
-
-  // header('Content-Type: application/json; charset=utf-8');
-  // header('Access-Control-Allow-Origin: *');
-
   $invalid = 'Invalid username or password.';
 
   $sql = 'SELECT * FROM users where username = \'' . $username . '\'';
-
-
 
   if(!isset($username)){
     $username = $_POST['username'];
@@ -44,16 +36,29 @@
     failure($invalid);
   }
 
+  
+  //$sessionHash = hash_hmac('sha256', $username, 'SecretCookieKey_RxReminder');
+
+  // session_id('bragusa');
+    
+  $_SESSION['username'] = $username;
+
+  $sessionid = $SESSION_ID;
+
+  // error_log(basename($_SERVER['PHP_SELF']) . '    Username=' . $_SESSION['username'] . '    sessionid=' . session_id(), 0);
 
 
-  $cookieValue = $username;
+  if(!strpos($_SERVER['HTTP_REFERER'], 'southshoreweb')){
+    $cookieValue = $username;
+  }
 
   $cookieHash = hash_hmac('sha256', $cookieValue, 'SecretCookieKey_RxReminder');
 
-  $cookieValue = "$cookieValue.$cookieHash";
+  //$cookieValue = "$cookieValue.$cookieHash";
+  $cookieValue = "$cookieValue.$cookieHash.$expires";
   
-  $expires = time() + 600; //only 10 minutes
+  //$expires = time() + 600; //only 10 minutes
   
   header("Set-Cookie: auth_token=$cookieValue; Expires=" . gmdate('D, d-M-Y H:i:s T', $expires) . "; Path=/; Secure; HttpOnly; SameSite=None");
-  success('authenticated');
+  success('authenticated ' . $username);
 ?>

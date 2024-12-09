@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
@@ -9,6 +9,27 @@ const OuterApp: React.FC = () => {
   const [auth, setAuth] = useState<{ username: string; password: string } | null>(null);
   
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Listen for visibility change events
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        // Notify the service worker that the app is now active
+        if (navigator.serviceWorker) {
+          navigator.serviceWorker.ready.then((registration) => {
+            registration.active?.postMessage({ type: 'APP_ACTIVE' });
+          });
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Cleanup listener on component unmount
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <AuthProvider>

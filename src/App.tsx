@@ -19,6 +19,7 @@ export interface User {
 }
 
 export interface Medication {
+  timesperday: any;
   username: string;
   name: string;
   sort: number;
@@ -105,7 +106,8 @@ function App() {
   };
 
   const medicationName = medicationData? medicationData[medicationIndex].name : '';
-  
+  const timesPerDay = medicationData? parseInt(String(medicationData[medicationIndex].timesperday)) : 1;
+
   return (
     <>
       <div className="App">
@@ -135,7 +137,7 @@ function App() {
                   { medicationData?.map((medication: Medication, index: number) => {
                     return <option key={index} value={medication.name}>{medication.name}</option>
                   }) }
-                </select>
+                </select><div>{timesPerDay>1?`( ${timesPerDay} per day )`:''}</div>
                 {/* <button className='App-edit' onClick={()=>{
                   openDialog({
                     title: 'Edit Medication',
@@ -171,7 +173,7 @@ function App() {
           </div>:null}
         </header>
         <div className='App-body'>
-          {user.name && medication?.name?<Calendar setWorking={setWorking} user={user} medication={category} showDate={false} displayMonth={displayMonth} displayYear={displayYear} />:<div style={{height: '730px'}} ></div>}
+          {user.name && medication?.name?<Calendar setWorking={setWorking} user={user} medication={category} timesPerDay={timesPerDay} showDate={false} displayMonth={displayMonth} displayYear={displayYear} />:<div style={{height: '730px'}} ></div>}
           </div>
       </div>
 
