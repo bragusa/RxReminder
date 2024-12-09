@@ -35,7 +35,7 @@ const OuterApp: React.FC = () => {
 
 // Wrap the `OuterApp` with `Router`
 const AppWrapper: React.FC = () => (
-  <Router basename="/rxreminder/">
+  <Router basename="/rxreminder">
     <OuterApp />
   </Router>
 );

@@ -23,26 +23,32 @@ body {
     margin-bottom: 2rem;
 
     .Today-icon {
-      font-size: 10px;
       color: #fff;
-      border-radius: 5px;
-      transform: scale(.85);
+      font-size: 10px;
       min-width: 1.75rem;
-
+      transform: scale(.75);
+      border-radius: 50% !important;
+      margin-top: 2px;
+  
       & > div:first-of-type {
         background: #a30000;
-        padding-inline: 0.25rem;
         padding-block: 1px;
+        padding-inline: 0.25rem;
+        border-radius: 30% 30% 0 0;
+        font-size: 117%;
+        display: flex;
+        justify-content: center;
       }
     
       & > div:last-of-type {
+        align-items: center;
         background-color: #bdbdbd;
         color: #000;
-        height: 1.15rem;
         display: flex;
-        align-items: center;
-        justify-content: center;
         font-size: 130%;
+        height: 1.15rem;
+        justify-content: center;
+        border-radius: 0 0 25% 25%;
       }
 
     }
@@ -54,12 +60,12 @@ body {
       transition: all .2s;
 
       &:after {
-        content: 'Today';
-        font-size: 50%;
         color: #fff;
-        position: absolute;
-        margin-top: -2rem;
+        content: "Today";
+        font-size: .65rem;
+        margin-top: 3rem;
         opacity: 0;
+        position: absolute;
       }
 
       &:hover {
@@ -117,6 +123,8 @@ body {
         color: #fff;
         border: 1px solid #fff;
         border-radius: 5px;
+        margin-block-start: -1rem;
+        margin-block-end: 1rem;
 
         select {
           appearance: none;
@@ -191,12 +199,13 @@ body {
       }
 
       &:after {
-        content: "Sign Out";
-        font-size: 60%;
         color: #fff;
-        position: absolute;
+        content: "Sign Out";
+        font-size: .65rem;
         margin-top: 3rem;
         opacity: 0;
+        position: absolute;
+        white-space: nowrap;
       }
 
       &:hover {
@@ -215,12 +224,12 @@ body {
       background: transparent;
       border: 0;
       font-size: 2rem;
-      width: 2rem;
-      height: 2rem;
-      max-height: 2rem;
-      max-width: 2rem;
-      min-width: 2rem;
-      min-height: 2rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      max-height: 2.5rem;
+      max-width: 2.5rem;
+      min-width: 2.5rem;
+      min-height: 2.5rem;
       margin-inline: 1rem;
       border-radius: 50% 50%;
       display: flex;

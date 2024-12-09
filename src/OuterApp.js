@@ -11,5 +11,5 @@ const OuterApp = () => {
     return (_jsx(AuthProvider, { children: _jsxs(Routes, { children: [_jsx(Route, { path: "/login", element: _jsx(Login, { setAuth: setAuth }) }), _jsx(Route, { path: "/", element: _jsx(ProtectedRoute, { children: _jsx(App, {}) }) })] }) }));
 };
 // Wrap the `OuterApp` with `Router`
-const AppWrapper = () => (_jsx(Router, { basename: "/rxreminder/", children: _jsx(OuterApp, {}) }));
+const AppWrapper = () => (_jsx(Router, { basename: "/rxreminder", children: _jsx(OuterApp, {}) }));
 export default AppWrapper;
