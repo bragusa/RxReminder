@@ -50,31 +50,28 @@ const Calendar = ({ displayMonth, displayYear, user, medication, setWorking, sho
     const writeDay = (firstDayOfTheMonth, day, dayNum, dayOfWeek, markedDates) => {
         let offset = firstDayOfTheMonth.getDay(); //returns day of the week to start
         let displayNum = 0;
-        //if (dayNum >= offset) {
+        let differentMonth = false;
         displayNum = dayNum + 1 - offset;
-        if (displayNum < 1) {
-            displayNum = 0;
-        }
+        let month = firstDayOfTheMonth.getMonth() + 1;
         const daysInMonth = new Date(firstDayOfTheMonth.getFullYear(), firstDayOfTheMonth.getMonth() + 1, 0).getDate();
-        // if(displayNum > daysInMonth) {
-        //   debugger;
-        //   displayNum = displayNum - daysInMonth;
-        // }
-        //}
         const myDate = displayNum.toString().length > 0 ? new Date(firstDayOfTheMonth).setDate(displayNum) : null;
         const thisDaysDate = new Date();
         const todaysString = `${thisDaysDate.getFullYear()}-${(thisDaysDate.getMonth() + 1).toString().padStart(2, '0')}-${thisDaysDate.getDate().toString().padStart(2, '0')}`;
-        let month = firstDayOfTheMonth.getMonth() + 1;
         let displayDateString = `${firstDayOfTheMonth.getFullYear()}-${(month).toString().padStart(2, '0')}-${displayNum.toString().padStart(2, '0')}`;
         if (displayNum > daysInMonth) {
             displayNum = displayNum - daysInMonth;
             month = month + 1;
             let year = displayYear;
-            if (month === 12) {
+            if (month === 13) {
                 month = 1;
                 year++;
             }
             displayDateString = `${year}-${(month).toString().padStart(2, '0')}-${displayNum.toString().padStart(2, '0')}`;
+            differentMonth = true;
+        }
+        else if (displayNum <= 0) {
+            displayDateString = `${displayYear}-${(month - 1).toString().padStart(2, '0')}-${new Date(displayYear, displayMonth, displayNum).getDate().toString().padStart(2, '0')}`;
+            differentMonth = true;
         }
         const currentDateData = markedDates === null || markedDates === void 0 ? void 0 : markedDates.filter(date => {
             const equal = date.date === displayDateString && date.medication === medication;
@@ -84,6 +81,10 @@ const Calendar = ({ displayMonth, displayYear, user, medication, setWorking, sho
         const marked = currentDateData && currentDateData.length > 0 ? parseInt(String(currentDateData[0].marked)) : 0;
         const todaysDate = new Date();
         const today = displayNum === todaysDate.getDate() && displayMonth === todaysDate.getMonth() && displayYear === todaysDate.getFullYear();
+        if (displayNum <= 0) {
+            //need to get Daynum from last month
+            displayNum = new Date(displayYear, displayMonth, displayNum).getDate();
+        }
         return _jsx("td", { className: today ? 'Calendar-today' : '', "data-marked": marked, onDoubleClick: () => { if (displayNum > 0) {
                 ;
                 toggleDay(displayDateString, timesPerDay, marked);
@@ -95,7 +96,7 @@ const Calendar = ({ displayMonth, displayYear, user, medication, setWorking, sho
                     if (displayNum > 0) {
                         toggleDay(displayDateString, timesPerDay, marked);
                     }
-                } }, children: _jsxs("div", { className: displayNum === 0 ? 'Different-month' : '', children: [_jsx("div", { className: 'Calendar-day-number', children: displayNum > 0 ? displayNum : '' }), timesPerDay > 1 && (today || marked >= 1) && (_jsx("div", { className: 'TimesTaken', children: Array.from({ length: timesPerDay }).map((_, index) => {
+                } }, children: _jsxs("div", { className: differentMonth ? 'Different-month' : '', children: [_jsx("div", { className: 'Calendar-day-number', children: displayNum > 0 ? displayNum : '' }), timesPerDay > 1 && (today || marked >= 1) && (_jsx("div", { className: 'TimesTaken', children: Array.from({ length: timesPerDay }).map((_, index) => {
                                 return _jsx("div", { className: marked > index ? 'Taken' : 'NotTaken', children: index + 1 }, index);
                             }) })), marked > 0 && timesPerDay === marked && timesPerDay === 1 ? _jsx("div", { className: 'Calendar-day-marked', style: { 'transform': `rotate(${displayNum / 2}deg)` }, children: "\u274C" }) : null] }) }) }, `key${dayNum}`);
     };
