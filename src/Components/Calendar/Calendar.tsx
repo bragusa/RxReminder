@@ -125,19 +125,19 @@ const Calendar: React.FC<Props> = ({ displayMonth, displayYear, user, medication
     const todaysDate = new Date();
     const today = displayNum === todaysDate.getDate() && displayMonth === todaysDate.getMonth() && displayYear === todaysDate.getFullYear();
     return <td className={today?'Calendar-today':''} data-marked={marked} key={`key${dayNum}`}  onDoubleClick={()=>{if(displayNum>0){;toggleDay(displayDateString, timesPerDay, marked)}}} >
-      <button className='Calendar-day' disabled={!displayNum} onKeyUp={(evt)=>{
+      <button data-per-day={timesPerDay} className='Calendar-day' disabled={!displayNum} onKeyUp={(evt)=>{
         if(['Enter', ' '].includes(evt.key) && displayNum>0){toggleDay(displayDateString, timesPerDay, marked);}
       }} onClick={(evt)=>{if(evt.ctrlKey || (today && !marked) || (today && timesPerDay>1)){if(displayNum>0){toggleDay(displayDateString,timesPerDay, marked)}}}}>
         <div className={displayNum === 0?'Different-month':''}>
           <div className='Calendar-day-number'>{displayNum > 0 ? displayNum : ''}</div>
-          { marked < timesPerDay && timesPerDay > 1 && marked >= 1 && (
+          { timesPerDay > 1 && (today || marked >= 1) && (
             <div className='TimesTaken'>
               {Array.from({ length: timesPerDay }).map((_, index) => {
-                return <div className={marked>index?'Taken':'NotTaken'} key={index}>{marked>index?'':index + 1}</div>;
+                return <div className={marked>index?'Taken':'NotTaken'} key={index}>{index + 1}</div>;
               })}
             </div>
           )}
-          {marked > 0 && timesPerDay === marked ? <div className='Calendar-day-marked' style={{ 'transform': `rotate(${displayNum/2}deg)` }}>❌</div> : null}
+          {marked > 0 && timesPerDay === marked && timesPerDay === 1 ? <div className='Calendar-day-marked' style={{ 'transform': `rotate(${displayNum/2}deg)` }}>❌</div> : null}
         </div>
       </button>
     </td>

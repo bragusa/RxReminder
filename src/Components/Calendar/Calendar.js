@@ -87,7 +87,7 @@ const Calendar = ({ displayMonth, displayYear, user, medication, setWorking, sho
         return _jsx("td", { className: today ? 'Calendar-today' : '', "data-marked": marked, onDoubleClick: () => { if (displayNum > 0) {
                 ;
                 toggleDay(displayDateString, timesPerDay, marked);
-            } }, children: _jsx("button", { className: 'Calendar-day', disabled: !displayNum, onKeyUp: (evt) => {
+            } }, children: _jsx("button", { "data-per-day": timesPerDay, className: 'Calendar-day', disabled: !displayNum, onKeyUp: (evt) => {
                     if (['Enter', ' '].includes(evt.key) && displayNum > 0) {
                         toggleDay(displayDateString, timesPerDay, marked);
                     }
@@ -95,9 +95,9 @@ const Calendar = ({ displayMonth, displayYear, user, medication, setWorking, sho
                     if (displayNum > 0) {
                         toggleDay(displayDateString, timesPerDay, marked);
                     }
-                } }, children: _jsxs("div", { className: displayNum === 0 ? 'Different-month' : '', children: [_jsx("div", { className: 'Calendar-day-number', children: displayNum > 0 ? displayNum : '' }), marked < timesPerDay && timesPerDay > 1 && marked >= 1 && (_jsx("div", { className: 'TimesTaken', children: Array.from({ length: timesPerDay }).map((_, index) => {
-                                return _jsx("div", { className: marked > index ? 'Taken' : 'NotTaken', children: marked > index ? '' : index + 1 }, index);
-                            }) })), marked > 0 && timesPerDay === marked ? _jsx("div", { className: 'Calendar-day-marked', style: { 'transform': `rotate(${displayNum / 2}deg)` }, children: "\u274C" }) : null] }) }) }, `key${dayNum}`);
+                } }, children: _jsxs("div", { className: displayNum === 0 ? 'Different-month' : '', children: [_jsx("div", { className: 'Calendar-day-number', children: displayNum > 0 ? displayNum : '' }), timesPerDay > 1 && (today || marked >= 1) && (_jsx("div", { className: 'TimesTaken', children: Array.from({ length: timesPerDay }).map((_, index) => {
+                                return _jsx("div", { className: marked > index ? 'Taken' : 'NotTaken', children: index + 1 }, index);
+                            }) })), marked > 0 && timesPerDay === marked && timesPerDay === 1 ? _jsx("div", { className: 'Calendar-day-marked', style: { 'transform': `rotate(${displayNum / 2}deg)` }, children: "\u274C" }) : null] }) }) }, `key${dayNum}`);
     };
     const writeWeek = (firstDayOfTheMonth, week, monthMarkedDates) => {
         return _jsx("tr", { className: 'Calendar-week', children: dateResources.days.long.map((day, dayOfWeek) => {

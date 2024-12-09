@@ -39,10 +39,10 @@
     .TimesTaken {
       display: flex;
       flex-direction: column;
-      height: 100%;
+      height: 90%;
       justify-content: space-evenly;
       width: 70%;
-      margin-inline-start: 25%;
+      margin-inline-start: 1rem;
       position: absolute;
 
       &>div {
@@ -54,11 +54,14 @@
         width: 3rem;
         height: 1rem;
         margin-inline-start: 1rem;
+        background-color: transparent;
+        transition: all .2s;
       }
 
       &>div.Taken {
-        background: rgb(255,0,0);
-        background: linear-gradient(90deg, rgba(255,0,0,0.500437675070028) 0%, rgba(121,9,9,0.500437675070028) 51%, rgba(245,245,245,0.5032387955182073) 51%, rgba(255,255,255,0.500437675070028) 100%);
+        background: #750000;
+        color: #fff;
+        // background: linear-gradient(90deg, rgba(255,0,0,0.500437675070028) 0%, rgba(121,9,9,0.500437675070028) 51%, rgba(245,245,245,0.5032387955182073) 51%, rgba(255,255,255,0.500437675070028) 100%);
       }
     }
 
@@ -102,6 +105,31 @@
       opacity: .75;
     }
   }
+
+  .Calendar-day[data-per-day='2'] {
+    .TimesTaken {       
+      &>div {
+        height: 30%;
+      }
+    }
+  }
+
+  .Calendar-day[data-per-day='3'] {
+    .TimesTaken {       
+      &>div {
+        height: 20%;
+      }
+    }
+  }
+  
+  .Calendar-day[data-per-day='4'] {
+    .TimesTaken {       
+      &>div {
+        height: 15%;
+      }
+    }
+  }
+
 }
 
 @media screen and (max-width: 700px), 
@@ -123,12 +151,42 @@
         max-height: 2.5rem;
       }
 
+      .TimesTaken {
+        margin-inline-start: 0rem;
+        &>div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 19px;
+          border: 1px solid #fff;
+          width: 1.25rem;
+          height: 0.5rem;
+          color: transparent
+        }
+      }
+    
       .Calendar-day-number:not(:empty) {
         min-width: 0.75rem;
       }
 
       .Calendar-day-marked {
         font-size: 2rem;
+      }
+    }
+
+    .Calendar-day {
+      .TimesTaken {       
+        &>div {
+          font-size: 0.5rem;
+        }
+      }
+    }
+
+    .Calendar-day[data-per-day='4'] {
+      .TimesTaken {       
+        &>div {
+          font-size: 0.25rem;
+        }
       }
     }
   }
