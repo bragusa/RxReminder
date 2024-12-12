@@ -6,21 +6,16 @@ import Login from "./Components/Login/Login";
 import App from "./App";
 
 const OuterApp: React.FC = () => {
-  const [auth, setAuth] = useState<{ username: string; password: string } | null>(null);
+  // eslint-disable-next-line no-unused-vars
+  const [auth, setAuth] = useState<{ username: string;} | null>(null);
   
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
   useEffect(() => {
     // Listen for visibility change events
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        // Notify the service worker that the app is now active
-        if (navigator.serviceWorker) {
-          navigator.serviceWorker.ready.then((registration) => {
-            registration.active?.postMessage({ type: 'APP_ACTIVE' });
-          });
-        }
-      }
+      const channel = new BroadcastChannel('app-channel');
+      channel.postMessage({ type: 'APP_ACTIVE' });
+      channel.close(); // Close the channel after sending the message 
+
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);

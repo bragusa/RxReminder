@@ -1,37 +1,53 @@
 <?php 
-session_start();
+  session_start();
 
-$expires = time() + 600; //only 10 minutes
-// error_log(basename($_SERVER['PHP_SELF']) . '    Username=' . $_SESSION['username'] . '    sessionid=' . session_id(), 0);
-// List of allowed domains
-// $allowedOrigins = ['http://localhost:3000', 'http://southshoreweb.com'];
+  $expires = time() + 600; //only 10 minutes
 
-// // Get the 'Origin' header from the request
-// $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+  function failure($reason){
+    print json_encode([ 'status' => 'failed', 'reason' => $reason]);
+    die('');
+  }
 
-// // Check if the request's origin is in the allowed list
-// if (in_array($origin, $allowedOrigins)) {
-//     header("Access-Control-Allow-Origin: $origin");  // Allow the matching origin
-// }
+  function success($result){
+    print json_encode([ 'status' => 'success', 'result' => $result]);
+    die('');
+  }
 
-// header('Access-Control-Allow-Methods: POST, GET, OPTIONS'); // Allowed methods
-// header('Access-Control-Allow-Headers: Content-Type, Authorization'); // Allowed headers
-// header('Access-Control-Allow-Credentials: true'); // Allow credentials (cookies)
+  // function setAuthCookie($expires, $write_cookie) {
+  //   error_log($write_cookie);
+  //   $_SESSION['username'] = $username;
 
-// if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-//     // Respond with 200 OK for OPTIONS requests
-//     http_response_code(200);
-//     exit();
-// }
+  //   $sessionid = $SESSION_ID;
+  
+  //   // error_log(basename($_SERVER['PHP_SELF']) . '    Username=' . $_SESSION['username'] . '    sessionid=' . session_id(), 0);
+  
+  
+  //   if(!strpos($_SERVER['HTTP_REFERER'], 'southshoreweb')){
+  //     $cookieValue = $username;
+  //   }
+  
+  //   $cookieHash = hash_hmac('sha256', $cookieValue, 'SecretCookieKey_RxReminder');
+  
+  //   //$cookieValue = "$cookieValue.$cookieHash";
+  //   $cookieValue = rawurlencode("$cookieValue.$cookieHash.$expires");
+    
+  //   //$expires = time() + 600; //only 10 minutes
+    
+  //   header("Set-Cookie: auth_token=$cookieValue; Expires=" . gmdate('D, d-M-Y H:i:s T', $expires) . "; Path=/; Secure; HttpOnly; SameSite=None");
 
+  //   if($write_cookie){
 
-    function failure($reason){
-      print json_encode([ 'status' => 'failed', 'reason' => $reason]);
-      die('');
-    }
+  //       // Create an array with the desired name-value pair
+  //       $response = [
+  //         'status' => 'success',
+  //         'result' => 'authenticated',
+  //         'expires' => $expires * 1000
+  //       ];
+  //       // Send the response as JSON
+  //       print json_encode($response);
+  //   }
 
-    function success($result){
-      print json_encode([ 'status' => 'success', 'result' => $result]);
-      die('');
-    }
+  // }
+
+  // setAuthCookie($expires, false);
 ?>

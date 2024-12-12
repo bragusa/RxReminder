@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 const transactionURL = window.location.protocol + '//southshoreweb.com/rxreminder/data';
-const DBAdapter = () => {
+const DBAdapter = (setWorking) => {
     const navigate = useNavigate(); // Hook for navigation
     const errored = (error, context) => {
         if (error instanceof Error) {
@@ -11,11 +11,26 @@ const DBAdapter = () => {
             // Handle other types of errors gracefully
             console.error(`Unknown error in ${context}:`, error);
         }
+        if (setWorking) {
+            setWorking(false);
+        }
         // Navigate to a fallback route
         navigate('/login');
     };
-    const sendPayload = async ({ transaction, body, params = [], errorString }) => {
+    const sendPayload = async ({ transaction, body, params = [], errorString, useWorking = true }) => {
+        // Declare waitLayerTimeoutId outside the try block to make it accessible in both try and catch
+        let waitLayerTimeoutId = null;
         try {
+            // Set the wait layer timeout threshold
+            const waitTimeout = 500; // ms
+            // Start showing the wait layer if the operation takes more than 500ms
+            // const showWaitLayer = new Promise<void>((resolve) => {
+            waitLayerTimeoutId = setTimeout(() => {
+                if (setWorking) {
+                    console.log('should have setworking = true');
+                    setWorking(true); // Show the wait layer
+                }
+            }, waitTimeout);
             // Construct query string from params array
             const urlWithParams = params.reduce((acc, param, index) => {
                 const key = Object.keys(param)[0];
@@ -25,7 +40,7 @@ const DBAdapter = () => {
                     return `${acc}${separator}${key}=${encodeURIComponent(value)}`;
                 }
                 return acc; // Skip if value is undefined
-            }, transaction);
+            }, `${transaction}.php`);
             // Set up request options
             const options = {
                 method: body ? 'POST' : 'GET',
@@ -34,35 +49,57 @@ const DBAdapter = () => {
             if (body) {
                 options.body = body; // Add body if it's provided
             }
-            // Make the request
+            // First, await the timeout to potentially show the wait layer
+            //await showWaitLayer;
+            // Make the request and store the response
             const response = await fetch(`${transactionURL}/${urlWithParams}`, options);
-            // Check for errors in the response
+            // Ensure response.ok is checked for valid HTTP responses
             if (!response.ok) {
                 throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
             }
             // Parse and return the response data
             const data = await response.json();
+            // Clear the timeout and hide the wait layer
+            if (waitLayerTimeoutId !== null) {
+                clearTimeout(waitLayerTimeoutId); // Safely clear the timeout
+            }
+            if (useWorking && setWorking) {
+                setWorking(false); // Hide the wait layer
+            }
             return data;
         }
         catch (error) {
-            errored(error, errorString);
-            // if (errorString) {
-            //   console.error(`${errorString}:`, error); // Log with custom error string
-            // }
-            // throw error; // Re-throw the error for further handling
+            // Clear timeout and hide the wait layer if error occurs
+            if (waitLayerTimeoutId !== null) {
+                clearTimeout(waitLayerTimeoutId); // Safely clear the timeout
+            }
+            if (useWorking && setWorking) {
+                setWorking(false); // Hide the wait layer
+            }
+            errored(error, errorString); // Handle the error
+            throw error; // Optionally re-throw the error for further handling
         }
     };
     // Logout
     const logout = async () => {
-        const transaction = 'logout.php';
+        const transaction = 'logout';
         const data = await sendPayload({
             transaction,
             errorString: 'fetching data',
+            useWorking: false
         });
         return data;
     };
+    const checkForCookie = async () => {
+        const transaction = 'authenticateuser';
+        return sendPayload({
+            transaction,
+            errorString: 'Checking authentication',
+            useWorking: false
+        });
+    };
     const authenticateUser = async (username, password) => {
-        const transaction = 'authenticateuser.php';
+        const transaction = 'authenticateuser';
         // Create the FormData
         const formData = new FormData();
         formData.append('username', username);
@@ -74,8 +111,8 @@ const DBAdapter = () => {
         });
         return response;
     };
-    const fetchData = async (table, orderBy) => {
-        const transaction = 'fetch.php';
+    const fetchData = async (table, orderBy, useWorking = true) => {
+        const transaction = 'fetch';
         const params = [
             { tablename: table },
             { orderby: orderBy }
@@ -84,18 +121,26 @@ const DBAdapter = () => {
             transaction,
             params,
             errorString: 'fetching data',
+            useWorking
         });
         return data;
     };
-    const checkForCookie = async () => {
-        const transaction = 'authenticateuser.php';
-        return sendPayload({
+    const fetchMonthDates = async (seed, medication, useWorking = true) => {
+        const transaction = 'fetchmonthdates';
+        const params = [
+            { seed_date: seed },
+            { medication }
+        ];
+        const data = await sendPayload({
             transaction,
-            errorString: 'Checking authentication'
+            params,
+            errorString: 'fetching month dates',
+            useWorking
         });
+        return data;
     };
-    const markDate = async (medication, date, marked) => {
-        const transaction = 'markdate.php';
+    const markDate = async (medication, date, marked, useWorking = true) => {
+        const transaction = 'markdate';
         const params = [
             { medication },
             { date },
@@ -104,7 +149,8 @@ const DBAdapter = () => {
         const data = await sendPayload({
             transaction,
             params,
-            errorString: 'Marking date'
+            errorString: 'Marking date',
+            useWorking
         });
         return data;
     };
@@ -113,7 +159,8 @@ const DBAdapter = () => {
         fetchData,
         checkForCookie,
         authenticateUser,
-        markDate
+        markDate,
+        fetchMonthDates
     };
 };
 export default DBAdapter;

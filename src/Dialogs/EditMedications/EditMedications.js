@@ -8,8 +8,6 @@ const EditMedications = forwardRef(({ user, close }, ref) => {
         if (!user) {
             return;
         }
-        // const result = await dbTransactions.updateMedication(user.username, user.password, medication.name, medication.sort);
-        // console.log(result);
     };
     useImperativeHandle(ref, () => ({
         apply() {

@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 interface Props {
   active?: boolean;
   spinner?: boolean;
-  relative?: boolean
+  relative?: boolean;
+  transparent?: boolean;
 }
 
-const Wait: React.FC<Props> = ({ active, spinner, relative }) => {
+const Wait: React.FC<Props> = ({ active, spinner, relative, transparent }) => {
   return ( active?
-      <div className={`Wait-underlay${relative?' Wait-relative':''}`}>
+      <div data-transparent={transparent} className={`Wait-underlay${relative?' Wait-relative':''}`}>
         {spinner?<div className="Wait-spinner"></div>:null}
       </div>
     :null

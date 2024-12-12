@@ -8,7 +8,7 @@ import EyeShow from '../../Resources/images/eye-password-show.svg';
 import EyeHide from '../../Resources/images/eye-password-hide.svg';
 
 interface LoginProps {
-  setAuth: React.Dispatch<React.SetStateAction<{ username: string; password: string } | null>>;
+  setAuth: React.Dispatch<React.SetStateAction<{ username: string; } | null>>;
 }
 
 const Login: React.FC<LoginProps> = ({ setAuth }) => {
@@ -24,13 +24,21 @@ const Login: React.FC<LoginProps> = ({ setAuth }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const navigateToApp = (expiration: number | null) => {
+    setIsAuthorized(true); // Save auth data to context
+    if(expiration){
+      sessionStorage.setItem('session_timeout', expiration+'');
+    }
+    navigate('/');
+  };
+
   const checkForCookie = async ()=>{
     setWorking(true);
     setTimeout(async()=>{
       const auth = await dbAdapter.checkForCookie();
       if(auth.status==='success'){
-        setIsAuthorized(true); // Save auth data to context
-        navigate('/');
+        navigateToApp(null);
         return;
       }
       setWorking(false);
@@ -59,9 +67,7 @@ const Login: React.FC<LoginProps> = ({ setAuth }) => {
       setErrorMessage('Invalid username or password.');
       return;
     }
-
-    setIsAuthorized(true); // Save auth data to context
-    navigate('/');
+    navigateToApp(auth.expires);
   };
 
   return (

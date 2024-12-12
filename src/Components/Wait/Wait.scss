@@ -38,6 +38,12 @@
 
 }
 
+.Wait-underlay {
+  &[data-transparent='true'] {
+    background-color: transparent;
+  }
+}
+
 
 
 @keyframes spin {

@@ -22,6 +22,12 @@ body {
     background-color: inherit;
     margin-bottom: 2rem;
 
+    .Title {
+      position: fixed;
+      top: 0;
+      padding: 0.5rem;
+    }
+
     .Today-icon {
       color: #fff;
       font-size: 10px;
@@ -121,14 +127,19 @@ body {
     }
 
     .App-medication {
-        min-width: 150px;
-        position: relative;
-        height: 2rem;
-        background-color: #282c34;
-        color: #fff;
-        border: 1px solid #fff;
-        border-radius: 5px;
-        margin-inline-end: 1rem;
+      text-overflow: ellipsis;
+      min-width: 150px;
+      position: relative;
+      height: 2.5rem;
+      background-color: #282c34;
+      color: #fff;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      margin-inline-end: 1rem;
+      font-size: 1.25rem;
+      max-width: 14rem;
+      display: inline-block;
+      white-space: nowrap;
 
         select {
           appearance: none;
@@ -269,9 +280,13 @@ body {
   screen and (max-height: 700px) {
     .App {
       .App-header {
- 
+
         .App-DateTitle {
           font-size: 100%;
+        }
+
+        button.SignOut {
+          top: 0;
         }
 
         .App-Today {

@@ -12,8 +12,6 @@ const EditMedications = forwardRef<DialogContentRef, DialogContentProps>(({ user
     if(!user){
       return;
     }
-    // const result = await dbTransactions.updateMedication(user.username, user.password, medication.name, medication.sort);
-    // console.log(result);
   }
 
   useImperativeHandle(ref, () => ({

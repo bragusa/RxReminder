@@ -4,8 +4,6 @@ import './index.css';
 import OuterApp from './OuterApp';
 import reportWebVitals from './reportWebVitals';
 
-// Import service worker registration
-import * as serviceWorkerRegistration from './ServiceWorkerRegistration';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,9 +15,6 @@ root.render(
     <OuterApp />
   // </React.StrictMode>
 );
-
-// Register the service worker
-serviceWorkerRegistration.register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

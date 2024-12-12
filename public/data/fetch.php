@@ -2,6 +2,7 @@
 
 $table_name = $_GET['tablename'];
 $order_by = $_GET['orderby'];
+$columns = $_GET['columns'];
 
 //make sure we have all the data that we require
 if(!isset($table_name) || !isset($username)){
@@ -10,7 +11,13 @@ if(!isset($table_name) || !isset($username)){
 }
 
 function fetch($conn, $table_name, $username, $order_by){
-  $sql = 'SELECT * FROM ' . $table_name . ' WHERE username = \'' . $username . '\'';
+
+  if($table_name==='users'){
+    $sql = 'SELECT name, username FROM ' . $table_name . ' WHERE username = \'' . $username . '\'';
+  }
+  else {
+    $sql = 'SELECT * FROM ' . $table_name . ' WHERE username = \'' . $username . '\'';
+  }
 
   if(!empty($order_by)){
     $sql .= ' ORDER BY ' . $order_by;

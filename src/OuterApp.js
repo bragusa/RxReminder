@@ -6,20 +6,14 @@ import { AuthProvider } from "./AuthContext";
 import Login from "./Components/Login/Login";
 import App from "./App";
 const OuterApp = () => {
+    // eslint-disable-next-line no-unused-vars
     const [auth, setAuth] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     useEffect(() => {
         // Listen for visibility change events
         const handleVisibilityChange = () => {
-            if (document.visibilityState === 'visible') {
-                // Notify the service worker that the app is now active
-                if (navigator.serviceWorker) {
-                    navigator.serviceWorker.ready.then((registration) => {
-                        var _a;
-                        (_a = registration.active) === null || _a === void 0 ? void 0 : _a.postMessage({ type: 'APP_ACTIVE' });
-                    });
-                }
-            }
+            const channel = new BroadcastChannel('app-channel');
+            channel.postMessage({ type: 'APP_ACTIVE' });
+            channel.close(); // Close the channel after sending the message 
         };
         document.addEventListener('visibilitychange', handleVisibilityChange);
         // Cleanup listener on component unmount

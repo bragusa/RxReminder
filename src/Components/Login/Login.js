@@ -20,13 +20,19 @@ const Login = ({ setAuth }) => {
         const { name, value } = e.target;
         setFormData(Object.assign(Object.assign({}, formData), { [name]: value }));
     };
+    const navigateToApp = (expiration) => {
+        setIsAuthorized(true); // Save auth data to context
+        if (expiration) {
+            sessionStorage.setItem('session_timeout', expiration + '');
+        }
+        navigate('/');
+    };
     const checkForCookie = async () => {
         setWorking(true);
         setTimeout(async () => {
             const auth = await dbAdapter.checkForCookie();
             if (auth.status === 'success') {
-                setIsAuthorized(true); // Save auth data to context
-                navigate('/');
+                navigateToApp(null);
                 return;
             }
             setWorking(false);
@@ -50,8 +56,7 @@ const Login = ({ setAuth }) => {
             setErrorMessage('Invalid username or password.');
             return;
         }
-        setIsAuthorized(true); // Save auth data to context
-        navigate('/');
+        navigateToApp(auth.expires);
     };
     return (_jsxs(_Fragment, { children: [_jsx("div", { className: 'Login-background' }), _jsxs("div", { className: 'Login', ref: loginForm, children: [_jsx("h2", { children: "Welcome to RxReminder." }), _jsx("h4", { className: 'Login-heading', children: "Please enter your login credentials." }), _jsxs("form", { onSubmit: handleSubmit, children: [_jsx("input", { type: 'text', name: 'username', placeholder: 'Username', value: formData.username, onChange: handleChange, autoCapitalize: 'off', autoComplete: 'username', maxLength: 12 }), _jsxs("div", { className: 'Login-password', children: [_jsx("input", { type: showPassword ? 'text' : 'password', name: 'password', placeholder: 'Password', value: formData.password, onChange: handleChange, maxLength: 12 }), _jsx("button", { style: { visibility: 'hidden', height: '1px' }, type: 'submit', children: "Login" }), _jsx("button", { className: 'Eye', onClick: (evt) => { evt.preventDefault(); setShowPassword(prev => !prev); }, children: _jsx("img", { src: showPassword ? EyeHide : EyeShow }) })] }), _jsx("button", { style: { float: 'left' }, type: 'submit', children: "Login" })] }), errorMessage && _jsx("p", { className: 'Error', style: { color: 'red' }, children: errorMessage })] }), _jsx(Wait, { spinner: true, active: working })] }));
 };

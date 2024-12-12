@@ -2,8 +2,7 @@
 export const databaseSchema = {
     users: {
         username: { type: 'string', length: 12 },
-        name: { type: 'string', length: 20 },
-        password: { type: 'string', length: 20 },
+        name: { type: 'string', length: 20 }
     },
     dates: {
         username: { type: 'string', length: 12 },
@@ -29,53 +28,3 @@ export function getColumnLength(table, column // This ensures `column` is valid 
     // Return undefined for non-string columns
     return undefined;
 }
-// export const DatabaseSchema = {
-//   users: {
-//     username: {
-//       type: 'string',
-//       length: 12
-//     },
-//     name: {
-//       type: 'string',
-//       length: 20
-//     },
-//     password: {
-//       type: 'string',
-//       length: 20
-//     }
-//   },
-//   dates: {
-//     username: {
-//       type: 'string',
-//       length: 12
-//     },
-//     medication: {
-//       type: 'string',
-//       length: 20
-//     },
-//     date: {
-//       type: 'date'
-//     },
-//     marked: {
-//       type: 'int'
-//     }
-//   },
-//   medications: {
-//     id: {
-//       type: 'int',
-//       autoIncrement: true,
-//       primaryKey: true
-//     },
-//     username: {
-//       type: 'string',
-//       length: 12
-//     },
-//     name: {
-//       type: 'string',
-//       length: 20
-//     },
-//     sort: {
-//       type: 'int'
-//     }
-//   }
-// }

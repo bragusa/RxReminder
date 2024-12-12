@@ -34,11 +34,17 @@ function set_date($conn, $username, $medication, $date, $marked){
   
   $sql = 'select * from dates where username = \'' . $username . '\' and medication = \'' . $medication . '\' and date = \'' . $date . '\'';
 
-  $result = mysqli_query($conn, $sql);
+  $retval = mysqli_query($conn, $sql);
+
+  $sql = "SELECT * FROM dates WHERE username = '" . $username . 
+    "' AND medication = '" . $medication .
+    "' AND date BETWEEN DATE_FORMAT(DATE_SUB('" . $date . "', INTERVAL 1 MONTH), '%Y-%m-01') AND LAST_DAY(DATE_ADD('" . $date . "', INTERVAL 1 MONTH)) order by date";
+  
+  $retval = mysqli_query($conn, $sql);
 
   $response = array();
 
-  while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { //<-----------change this
+  while ($row = mysqli_fetch_array($retval, MYSQLI_ASSOC)) {
     $response[] = $row;
   }
 
@@ -47,12 +53,9 @@ function set_date($conn, $username, $medication, $date, $marked){
 }
 
 
-
-
-$response =  set_date($conn, $username, $medication, $date, $marked);
+$response = set_date($conn, $username, $medication, $date, $marked);
     
 print json_encode($response);
-
 
 mysqli_close($conn);
 
