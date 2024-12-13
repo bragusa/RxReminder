@@ -18,6 +18,9 @@ First, navigate to the site in Chrome. Press the "three dot" icon in the upper r
 Navigate to the site in Safari. Press the "Share" button and select "Add to Home Screen" from the popup. Lastly, tap "Add" in the top right corner to finish installing the PWA.
 
 
+!!!! Must get dbconnection repository to apply private connection settings
+
+
 ## Available Scripts
 
 In the project directory, you can run:
