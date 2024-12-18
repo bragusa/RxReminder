@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-const transactionURL = window.location.protocol + '';
+import { transactionURL } from './_connectioninfo';
 const DBAdapter = (setWorking) => {
     const navigate = useNavigate(); // Hook for navigation
     const errored = (error, context) => {

@@ -1,10 +1,7 @@
 <?php require 'utility.php';?><?php
   header('Content-Type: application/json; charset=utf-8');
   
-  $dbhost = 'xxx';
-  $dbuser = 'xxx';
-  $dbpass = 'xxx';
-  $dbname = 'xxx';  
+  ?><?php require '_connectioninfo.php';?><?php
 
   try {
     $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);

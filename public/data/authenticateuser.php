@@ -13,10 +13,7 @@
     $sql = 'SELECT * FROM users where username = \'' . $username . '\' and password = \'' . $password . '\'';
   }
 
-  $dbhost = 'localhost';
-  $dbuser = 'southsho_admin';
-  $dbpass = 'SouthShoreWeb_Admin';
-  $dbname = 'southsho_medications';  
+  ?><?php require '_connectioninfo.php';?><?php 
 
   try {
     $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
